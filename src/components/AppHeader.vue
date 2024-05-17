@@ -5,19 +5,19 @@
       <RouterLink class="title" to="/main">Творчество</RouterLink>
     </div>
     <div class="item_button">
-      <AppButton v-if="!user?.uid">
+      <AppButton v-if="!isAuth">
         <RouterLink to="/regis">Зарегистрироваться</RouterLink>
       </AppButton>
-      <AppButton v-if="!user?.uid">
+      <AppButton v-if="!isAuth">
         <RouterLink to="/auth">Войти</RouterLink>
       </AppButton>
       <form @submit.prevent="logout">
-        <AppButton type="submit" v-if="user?.uid">Выйти</AppButton>
+        <AppButton type="submit" v-if="isAuth">Выйти</AppButton>
       </form>
-      <AppButton v-if="user?.uid">
+      <AppButton v-if="isAuth">
         <RouterLink to="/profile">Профиль</RouterLink>
       </AppButton>
-      <AppButton v-if="user?.uid">
+      <AppButton v-if="isAuth">
         <RouterLink to="/main">Главная страница</RouterLink>
       </AppButton>
     </div>
@@ -46,20 +46,21 @@ export default {
   },
   setup() {
     const userStore = storeToRefs(useUserStore())
-    const {user} = userStore
+    const { isAuth } = userStore
 
     return {
-      user,
+      isAuth,
     }
   },
   methods: {
     logout() {
       const user = getAuth();
-      if (this.user?.uid) {
+      if (this.isAuth) {
         signOut(user)
             .then(() => {
-              localStorage.removeItem('userUID');
-              // this.$router.push('/auth');
+              localStorage.removeItem('user');
+              this.isAuth = false;
+              this.$router.push('/auth');
             })
             .catch((error) => {
               console.error('Error:', error.message);

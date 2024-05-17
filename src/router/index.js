@@ -1,5 +1,4 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import AppHeader from '../components/AppHeader.vue'
 import { useUserStore } from "../stores/user.js";
 import AppFolder from "../components/AppFolder.vue";
 import {storeToRefs} from "pinia";
@@ -65,13 +64,11 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-    console.log(to.matched)
     const userStore = useUserStore()
-    const { user } = storeToRefs(userStore);
-    if (requiresAuth && !user?.value.uid) {
-        return {path :"/auth"}
-    } else {
+    const { isAuth } = storeToRefs(userStore);
 
+    if (requiresAuth && !isAuth.value) {
+        return { path :"/auth" }
     }
 })
 

@@ -34,10 +34,11 @@ export default {
   components: {AppValidate, AppButton},
   setup() {
     const userStore = storeToRefs(useUserStore())
-    const {user} = userStore
+    const { user, isAuth } = userStore
 
     return {
       user,
+      isAuth
     }
   },
   data() {
@@ -59,12 +60,12 @@ export default {
       const userAuth = getAuth(apps)
       signInWithEmailAndPassword(userAuth, this.formData.email, this.formData.password).then((res) => {
         const userData = res.user;
-        localStorage.setItem('userUID', userData.uid);
+        localStorage.setItem('user', JSON.stringify(userData));
         this.user = userData;
-        console.log(this.user)
+        this.isAuth = true
         router.push('/main');
       }).catch((error) => {
-            this.errorUser = error.message
+        this.errorUser = error.message
       })
     },
     handleValidationError(errors) {
