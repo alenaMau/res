@@ -10,8 +10,9 @@
 
 <script>
 import * as image from "../assets/mosaic/index.js"
-import {getDatabase, push, set, ref as path, child, query, orderByChild, equalTo, get} from "firebase/database";
-import {useUserStore} from "../stores/user.js";
+import {getDatabase, push, set, ref as path, query, orderByChild, equalTo, get} from "firebase/database";
+import {useUserStore} from "@/stores/user";
+import {storeToRefs} from "pinia/dist/pinia";
 
 export default {
   name: "AppLike",
@@ -20,9 +21,10 @@ export default {
   },
   setup() {
     const userStore = useUserStore();
-    const uid = userStore.user?.uid;
+    const { user }  = storeToRefs(userStore);
+
     return {
-      uid
+      user
     }
   },
   data() {
@@ -32,12 +34,11 @@ export default {
       likesNone: image.likesNone,
     }
   },
-  async mounted() {
-    const userStore = useUserStore();
+  mounted() {
     const db = getDatabase();
 
     const favoriteRef = path(db, 'favorites');
-    const queryRef = query(favoriteRef, orderByChild('userUID'), equalTo(this.uid));
+    const queryRef = query(favoriteRef, orderByChild('userUID'), equalTo(this.user?.uid));
     get(queryRef).then(snapshot => {
       snapshot.forEach(childSnapshot => {
         const data = childSnapshot.val();

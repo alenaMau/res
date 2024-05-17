@@ -40,7 +40,6 @@ export default {
   components: {AppButton},
   data() {
     return {
-      userUID: localStorage.getItem('userUID'),
       imgLogo: images.imgLogo
     }
   },
