@@ -1,0 +1,9 @@
+/// <reference types="vite/client" />
+
+// REACT_APP_FIREBASE_API_KEY=AIzaSyD_k_hizUjEyT6eFVXw92X8hR9JMWlM7Ms
+// REACT_APP_FIREBASE_AUTH_DOMAIN=platform-de513.firebaseapp.com
+// REACT_APP_FIREBASE_DATABASE_URL=https://platform-de513-default-rtdb.firebaseio.com
+// REACT_APP_FIREBASE_PROJECT_ID=platform-de513
+// REACT_APP_FIREBASE_STORAGE_BUCKET=platform-de513.appspot.com
+// REACT_APP_FIREBASE_MESSAGING_SENDER_ID=94324169690
+// REACT_APP_FIREBASE_APP_ID=1:94324169690:web:be1d15c54fde796aeefee3
